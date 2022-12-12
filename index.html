@@ -1,0 +1,49 @@
+<html>
+    <head>
+        <Title>DataViz</Title>
+        <style type = "text/css">
+            #viz {
+                width: 2560px;
+                height: 1440px;
+            }
+        </style>
+        <script src="https://unpkg.com/neovis.js@2.0.2"></script>
+    </head>
+    <script>
+        let viz;
+        function draw() {
+            var config = {
+                containerId: "viz",
+                neo4j: {
+                    serverUrl: "neo4j://6245fb6d.databases.neo4j.io",
+                    serverUser: "neo4j",
+                    serverPassword: "mCeh_AcxdJ9bQ_c_f8Zud26dEZqtXaor0Uc5UUCvzuQ",
+                    driverConfig: {
+                        encrypted:"ENCRYPTION_ON",
+                        trust:"TRUST_SYSTEM_CA_SIGNED_CERTIFICATES"
+                        }  
+                },
+                labels: {
+                    Dataset: {
+                        label: "name",
+                        group: 'mission'
+                    }
+                },
+                relationships: {
+                    "CO_CITED": {
+                        value: "co_cited_count",
+                        thickness: "co_cited_count",
+                        color: "Pink"
+                    }
+                },
+                initialCypher: "MATCH p=()-[r:CO_CITED]->() RETURN p"
+            };
+
+            var viz = new NeoVis.default(config);
+            viz.render();
+        }
+    </script>
+    <body onload="draw()">
+        <div id="viz"></div>
+    </body>
+</html>
